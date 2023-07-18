@@ -1,10 +1,10 @@
-package com.simplon.candy.model;
+package com.simplon.candy.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,24 +13,15 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "couleur", schema = "candy", catalog = "")
 public class CouleurEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Basic
-    @Column(name = "couleur")
+
+    @Column(name = "couleur", nullable = false)
     private String couleur;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CouleurEntity that = (CouleurEntity) o;
-        return id == that.id && Objects.equals(couleur, that.couleur);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, couleur);
-    }
+    @OneToMany(mappedBy = "couleur", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<ItemcandyboxEntity> itemCandyboxes = new ArrayList<>();
 }

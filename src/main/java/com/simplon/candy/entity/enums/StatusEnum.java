@@ -1,4 +1,4 @@
-package com.simplon.candy.model.enums;
+package com.simplon.candy.entity.enums;
 
 public enum StatusEnum {
     OK(200),

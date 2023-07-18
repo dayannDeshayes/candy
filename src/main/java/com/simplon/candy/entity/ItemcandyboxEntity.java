@@ -1,4 +1,4 @@
-package com.simplon.candy.model;
+package com.simplon.candy.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,30 +13,24 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "itemcandybox", schema = "candy", catalog = "")
 public class ItemcandyboxEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Basic
-    @Column(name = "idCandybox")
-    private Integer idCandybox;
-    @Basic
-    @Column(name = "idCouleur")
-    private Integer idCouleur;
-    @Basic
-    @Column(name = "quantite")
+
+    @ManyToOne
+    @JoinColumn(name = "idCandybox")
+    private CandyboxEntity candybox;
+
+    @ManyToOne
+    @JoinColumn(name = "idCouleur")
+    private CouleurEntity couleur;
+
+    @Column(name = "quantite", nullable = false)
     private int quantite;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemcandyboxEntity that = (ItemcandyboxEntity) o;
-        return id == that.id && quantite == that.quantite && Objects.equals(idCandybox, that.idCandybox) && Objects.equals(idCouleur, that.idCouleur);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, idCandybox, idCouleur, quantite);
+    public ItemcandyboxEntity(CandyboxEntity candybox, CouleurEntity couleur, int quantite) {
+        this.candybox = candybox;
+        this.couleur = couleur;
+        this.quantite = quantite;
     }
 }

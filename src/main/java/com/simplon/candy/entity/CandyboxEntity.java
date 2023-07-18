@@ -1,10 +1,10 @@
-package com.simplon.candy.model;
+package com.simplon.candy.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,24 +13,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "candybox", schema = "candy", catalog = "")
 public class CandyboxEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Basic
-    @Column(name = "idCommande")
-    private Integer idCommande;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CandyboxEntity that = (CandyboxEntity) o;
-        return id == that.id && Objects.equals(idCommande, that.idCommande);
-    }
+    @ManyToOne
+    @JoinColumn(name = "idCommande")
+    private CommandeEntity commande;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, idCommande);
+    @OneToMany(mappedBy = "candybox", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<ItemcandyboxEntity> itemCandyboxes = new ArrayList<>();
+
+    public CandyboxEntity(CommandeEntity commande) {
+        this.commande = commande;
     }
 }

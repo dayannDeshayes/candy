@@ -15,12 +15,31 @@
     <description>candy</description>
     <properties>
         <java.version>17</java.version>
+        <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.3</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -36,6 +55,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
@@ -53,6 +76,36 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <defaultOutputDirectory>
+                        target/generated-sources
+                    </defaultOutputDirectory>
+                    <processors>
+                        <processor>org.mapstruct.ap.MappingProcessor</processor>
+                    </processors>
+                    <options>
+                        <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
+                        <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
+                    </options>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
         </plugins>
     </build>
 

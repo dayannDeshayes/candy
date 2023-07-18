@@ -1,9 +1,9 @@
-package com.simplon.candy.service;
+package com.simplon.candy.service.IService;
 
 import com.simplon.candy.entity.model.OrderModel;
 import com.simplon.candy.entity.model.OrderOutputModel;
 
 public interface ICandyOrderService {
 
-    public OrderOutputModel processOrder(OrderModel orderModel);
+    OrderOutputModel processOrder(OrderModel orderModel);
 }

@@ -1,10 +1,10 @@
-package com.simplon.candy.model;
+package com.simplon.candy.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,27 +13,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "commande", schema = "candy", catalog = "")
 public class CommandeEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Basic
-    @Column(name = "idUtilisateur")
-    private Integer idUtilisateur;
-    @Basic
-    @Column(name = "idCandytag")
-    private Integer idCandytag;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CommandeEntity that = (CommandeEntity) o;
-        return id == that.id && Objects.equals(idUtilisateur, that.idUtilisateur) && Objects.equals(idCandytag, that.idCandytag);
-    }
+    @ManyToOne
+    @JoinColumn(name = "idUtilisateur")
+    private UtilisateurEntity utilisateur;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, idUtilisateur, idCandytag);
-    }
+    @ManyToOne
+    @JoinColumn(name = "idCandytag")
+    private CandytagEntity candytag;
+
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<CandyboxEntity> candyboxes = new ArrayList<>();
 }

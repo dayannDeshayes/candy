@@ -1,7 +1,7 @@
-package com.simplon.candy.model.DTO;
+package com.simplon.candy.entity.DTO;
 
-import com.simplon.candy.model.enums.CandytagEnum;
-import com.simplon.candy.model.enums.StatusEnum;
+import com.simplon.candy.entity.enums.CandytagEnum;
+import com.simplon.candy.entity.enums.StatusEnum;
 import lombok.Data;
 
 @Data
