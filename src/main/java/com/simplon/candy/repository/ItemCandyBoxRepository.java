@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ItemCandyBoxRepository extends CrudRepository<ItemcandyboxEntity, Integer>  {
 
-    List<ItemcandyboxEntity> findByCandyboxId(int candyboxId);
+    List<ItemcandyboxEntity> findByCandybox_Commande_Id(int idCommande);
 }

@@ -1,5 +1,6 @@
 package com.simplon.candy.entity.DTO;
 
+import com.simplon.candy.entity.CommandeEntity;
 import com.simplon.candy.entity.enums.CandytagEnum;
 import com.simplon.candy.entity.enums.StatusEnum;
 import lombok.Data;
@@ -7,11 +8,7 @@ import lombok.Data;
 @Data
 public class OrderOutputDto {
 
-    private int utilisateurId;
-
-    private int qte;
-
-    private CandytagEnum candytag;
+    private CommandeEntity commande;
 
     private String message;
 

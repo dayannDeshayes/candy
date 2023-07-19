@@ -23,7 +23,6 @@ public interface Mapper {
 
     OrderInputDTO toDto(OrderModel orderModel);
 
-    OrderOutputDto toDto(OrderOutputModel orderOutputModel);
 
     default CommandeEntity toEntity(OrderModel orderModel, @Context UtilisateurRepository utilisateurRepository, @Context CandytagRepository candytagRepository, @org.mapstruct.MappingTarget CommandeEntity commandeEntity) {
         CandytagEntity candytag = candytagRepository.findByCandytag(orderModel.getCandytag());

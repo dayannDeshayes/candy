@@ -1,8 +1,10 @@
 package com.simplon.candy.controller;
 
+import com.simplon.candy.entity.model.OrderOutputModel;
 import com.simplon.candy.mapper.Mapper;
 import com.simplon.candy.entity.DTO.OrderInputDTO;
 import com.simplon.candy.entity.DTO.OrderOutputDto;
+import com.simplon.candy.mapper.ResponseDtoMapper;
 import com.simplon.candy.service.IService.ICandyOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,16 @@ public class OrderController {
     private final ICandyOrderService candyOrderService;
 
     private final Mapper mapper;
+
     @PostMapping("")
-    public void createOrder(@RequestBody OrderInputDTO orderInputDTO) {
-       /* OrderOutputDto order = this.mapper.toDto(
-                candyOrderService.processOrder(this.mapper.toModel(orderInputDTO))
-        );*/
-       // return new ResponseEntity<>(order, HttpStatus.valueOf(order.getStatus().ordinal()));
+    public ResponseDtoMapper createOrder(@RequestBody OrderInputDTO orderInputDTO) {
+        try {
+            return ResponseDtoMapper.fromOrderOutputModel(this.candyOrderService.processOrder(this.mapper.toModel(orderInputDTO)));
+        } catch (Exception e) {
+            ResponseDtoMapper dto = new ResponseDtoMapper();
+            dto.setMsgerr(e.getMessage());
+            dto.setStatus(500);
+            return dto;
+        }
     }
 }
