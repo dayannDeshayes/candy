@@ -1,7 +1,6 @@
 package com.simplon.candy;
 
 import com.simplon.candy.entity.CandytagEntity;
-import com.simplon.candy.entity.CommandeEntity;
 import com.simplon.candy.entity.ItemcandyboxEntity;
 import com.simplon.candy.entity.UtilisateurEntity;
 import com.simplon.candy.entity.enums.CandytagEnum;
@@ -12,8 +11,6 @@ import com.simplon.candy.repository.CommandeRepository;
 import com.simplon.candy.repository.CouleurRepository;
 import com.simplon.candy.repository.ItemCandyBoxRepository;
 import com.simplon.candy.service.CandyOrderService;
-import com.simplon.candy.service.IService.ICandyOrderService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -48,7 +45,7 @@ class CandyApplicationTests {
 
     @ParameterizedTest
     @MethodSource("provideOrderData")
-    void testSakuraAlgo(int userId, String userName, CandytagEnum candyTag, int qte, Map<String, Integer> expectedDistribution) {
+    void testSakuraAlgo(int userId, String userName, CandytagEnum candyTag, int qte, Map<String, Integer> expectedDistribution) throws Exception {
         UtilisateurEntity user = new UtilisateurEntity();
         user.setId(userId);
         user.setNom(userName);
@@ -82,37 +79,8 @@ class CandyApplicationTests {
                 Arguments.of(2, "Test User 2", CandytagEnum.SAKURA, 60, Map.of("green", 10, "white", 50)),
                 Arguments.of(3, "Test User 3", CandytagEnum.SAKURA, 70, Map.of("green", 10, "white", 50, "yellow", 10)),
                 Arguments.of(4, "Test User 4", CandytagEnum.SAKURA, 151, Map.of())
-                // ajouter d'autres données de test si nécessaire
         );
     }
-
-   /* @Test
-    void testSakuraAlgo() {
-        UtilisateurEntity user = new UtilisateurEntity();
-        user.setId(1);
-        user.setNom("Test User");
-
-        CandytagEntity candytag = candyTagRepository.findByCandytag(CandytagEnum.SAKURA);
-        assertNotNull(candytag);
-
-        OrderModel orderModel = new OrderModel();
-        orderModel.setUtilisateurId(user.getId());
-        orderModel.setCandytag(CandytagEnum.SAKURA);
-        orderModel.setQte(7);
-
-        OrderOutputModel commande = candyOrderService.processOrder(orderModel);
-
-        assertNotNull(commande);
-        assertEquals(user.getId(), commande.getCommande().getUtilisateur().getId());
-        assertEquals(candytag.getId(), commande.getCommande().getCandytag().getId());
-
-        List<ItemcandyboxEntity> items = itemcandyboxRepository.findByCandybox_Commande_Id(commande.getCommande().getId());
-        assertFalse(items.isEmpty());
-
-
-        int totalQuantity = items.stream().mapToInt(ItemcandyboxEntity::getQuantite).sum();
-        assertEquals(orderModel.getQte(), totalQuantity);
-    }*/
 
     @Test
     void contextLoads() {
